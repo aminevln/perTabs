@@ -6,24 +6,19 @@
     <title>Una Sorpresa Per Te</title>
     <style>
         /* --- Stili Globali e Setup --- */
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400&display=swap');
 
         :root {
-            --colore-scatola-1: #c9184a;
-            --colore-fiocco-1: #ff758f;
-            --colore-scatola-2: #800f2f;
-            --colore-fiocco-2: #ff8fa3;
-            --colore-scatola-3: #590d22;
-            --colore-fiocco-3: #ffa6c1;
+            --colore-scatola-1: #c9184a; --colore-fiocco-1: #ff758f;
+            --colore-scatola-2: #800f2f; --colore-fiocco-2: #ff8fa3;
+            --colore-scatola-3: #590d22; --colore-fiocco-3: #ffa6c1;
+            /* Aggiungi qui i colori per le nuove scatole se vuoi */
+            --colore-scatola-4: #006d77; --colore-fiocco-4: #83c5be;
             --colore-sfondo: #100007;
             --colore-testo: #fff0f3;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -35,129 +30,67 @@
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             overflow: hidden;
-            perspective: 1000px; /* Abilita la prospettiva 3D */
+            perspective: 1000px;
         }
 
         @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
         }
 
-        /* --- Contenitore Principale delle Scatole --- */
         .wrapper {
             position: relative;
             width: 250px;
             height: 250px;
-        }
-
-        /* --- Stile di ogni scatola --- */
-        .box-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            transform-style: preserve-3d;
-            transition: all 1s ease-in-out;
-            opacity: 0;
-            transform: scale(0);
-            pointer-events: none; /* Disabilita i click quando non è attiva */
         }
 
-        .box-container.active {
-            opacity: 1;
-            transform: scale(1);
-            pointer-events: auto; /* Abilita i click quando attiva */
+        .box-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            transform-style: preserve-3d; transition: all 1s ease-in-out;
+            opacity: 0; transform: scale(0); pointer-events: none;
         }
+        .box-container.active { opacity: 1; transform: scale(1); pointer-events: auto; }
 
         .gift-box {
-            width: 180px;
-            height: 180px;
-            position: relative;
-            cursor: pointer;
-            transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            width: 180px; height: 180px; position: relative; cursor: pointer;
+            transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             animation: float 4s ease-in-out infinite;
         }
-
-        .gift-box:hover {
-            transform: rotateY(10deg) rotateX(5deg) scale(1.05);
-            animation-play-state: paused;
-        }
+        .gift-box:hover { transform: rotateY(10deg) rotateX(5deg) scale(1.05); animation-play-state: paused; }
 
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
+            0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); }
         }
 
-        /* Il coperchio della scatola */
         .lid {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background-color: var(--colore-fiocco-1);
-            top: -50px;
-            left: -10px;
-            transform-origin: bottom center;
+            position: absolute; width: 200px; height: 200px; background-color: var(--colore-fiocco-1);
+            top: -50px; left: -10px; transform-origin: bottom center;
             transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-            transform: rotateX(0deg);
-            z-index: 2;
-            border-radius: 8px;
+            transform: rotateX(0deg); z-index: 2; border-radius: 8px;
         }
 
-        /* La parte inferiore della scatola */
         .box-body {
-            position: absolute;
-            width: 180px;
-            height: 180px;
-            background-color: var(--colore-scatola-1);
-            z-index: 1;
-            border-radius: 8px;
-            transition: all 0.8s ease-out;
+            position: absolute; width: 180px; height: 180px; background-color: var(--colore-scatola-1);
+            z-index: 1; border-radius: 8px; transition: all 0.8s ease-out;
         }
 
-        /* Le strisce del fiocco */
-        .ribbon {
-            position: absolute;
-            background-color: var(--colore-fiocco-1);
-            opacity: 0.8;
-        }
+        .ribbon { position: absolute; opacity: 0.8; }
+        .ribbon.vertical { width: 30px; height: 100%; left: 50%; transform: translateX(-50%); }
+        .ribbon.horizontal { width: 100%; height: 30px; top: 50%; transform: translateY(-50%); }
+        .lid .ribbon { background-color: var(--colore-scatola-1); }
 
-        .ribbon.vertical {
-            width: 30px;
-            height: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-        }
+        .box-container.opening .lid { transform: translateY(-200px) rotateX(90deg) scale(0.8); opacity: 0; }
+        .box-container.opening .box-body { transform: translateY(50px) scale(0.9); opacity: 0; }
 
-        .ribbon.horizontal {
-            width: 100%;
-            height: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
+        /* Colori diversi per ogni scatola */
+        #box1 .lid { background-color: var(--colore-fiocco-1); }
+        #box1 .box-body { background-color: var(--colore-scatola-1); }
+        #box1 .ribbon { background-color: var(--colore-fiocco-1); }
+        #box1 .lid .ribbon { background-color: var(--colore-scatola-1); }
 
-        .lid .ribbon {
-            background-color: var(--colore-scatola-1);
-        }
-
-        /* --- Animazione di Apertura --- */
-        .box-container.opening .lid {
-            transform: translateY(-200px) rotateX(90deg) scale(0.8);
-            opacity: 0;
-        }
-
-        .box-container.opening .box-body {
-            transform: translateY(50px) scale(0.9);
-            opacity: 0;
-        }
-
-        /* --- Colori diversi per ogni scatola --- */
         #box2 .lid { background-color: var(--colore-fiocco-2); }
         #box2 .box-body { background-color: var(--colore-scatola-2); }
         #box2 .ribbon { background-color: var(--colore-fiocco-2); }
@@ -168,77 +101,52 @@
         #box3 .ribbon { background-color: var(--colore-fiocco-3); }
         #box3 .lid .ribbon { background-color: var(--colore-scatola-3); }
 
+        /* NUOVA REGOLA PER LA SCATOLA 4 */
+        #box4 .lid { background-color: var(--colore-fiocco-4); }
+        #box4 .box-body { background-color: var(--colore-scatola-4); }
+        #box4 .ribbon { background-color: var(--colore-fiocco-4); }
+        #box4 .lid .ribbon { background-color: var(--colore-scatola-4); }
+
         /* --- Messaggio Finale --- */
         .final-message {
+            position: absolute; width: 90%; max-width: 500px; text-align: center;
+            color: var(--colore-testo); opacity: 0; transition: opacity 2s ease-in-out;
+            font-family: 'Playfair Display', serif; font-size: 1.8rem; line-height: 1.5;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.7); pointer-events: none;
+        }
+        .final-message.visible { opacity: 1; }
+        .final-message span { font-weight: bold; font-style: italic; }
+
+        /* --- NUOVO: Stile per i messaggi intermedi --- */
+        .prompt-message {
             position: absolute;
-            width: 90%;
-            max-width: 500px;
+            bottom: -60px; /* Posizionato sotto la scatola */
+            width: 100%;
             text-align: center;
             color: var(--colore-testo);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            font-size: 1.1rem;
             opacity: 0;
-            transition: opacity 2s ease-in-out;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            line-height: 1.5;
-            text-shadow: 0 0 15px rgba(255, 105, 180, 0.7);
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none;
         }
-
-        .final-message.visible {
-            opacity: 1;
-        }
-
-        .final-message span {
-            font-weight: bold;
-            font-style: italic;
-        }
+        .prompt-message.visible { opacity: 0.8; }
 
     </style>
 </head>
 <body>
 
     <div class="wrapper">
-        <div class="box-container active" id="box1">
-            <div class="gift-box">
-                <div class="box-body">
-                    <div class="ribbon vertical"></div>
-                    <div class="ribbon horizontal"></div>
-                </div>
-                <div class="lid">
-                    <div class="ribbon vertical"></div>
-                    <div class="ribbon horizontal"></div>
-                </div>
-            </div>
-        </div>
+        <div class="box-container active" id="box1"> <div class="gift-box"> <div class="box-body"> <div class="ribbon vertical"></div> <div class="ribbon horizontal"></div> </div> <div class="lid"> <div class="ribbon vertical"></div> <div class="ribbon horizontal"></div> </div> </div> </div>
+        <div class="box-container" id="box2"> <div class="gift-box"> <div class="box-body"> <div class="ribbon vertical"></div> <div class="ribbon horizontal"></div> </div> <div class="lid"> <div class="ribbon vertical"></div> <div class="ribbon horizontal"></div> </div> </div> </div>
+        <div class="box-container" id="box3"> <div class="gift-box"> <div class="box-body"> <div class="ribbon vertical"></div> <div class="ribbon horizontal"></div> </div> <div class="lid"> <div class="ribbon vertical"></div> <div class="ribbon horizontal"></div> </div> </div> </div>
 
-        <div class="box-container" id="box2">
-            <div class="gift-box">
-                <div class="box-body">
-                    <div class="ribbon vertical"></div>
-                    <div class="ribbon horizontal"></div>
-                </div>
-                <div class="lid">
-                    <div class="ribbon vertical"></div>
-                    <div class="ribbon horizontal"></div>
-                </div>
-            </div>
-        </div>
+        <div class="box-container" id="box4"> <div class="gift-box"> <div class="box-body"> <div class="ribbon vertical"></div> <div class="ribbon horizontal"></div> </div> <div class="lid"> <div class="ribbon vertical"></div> <div class="ribbon horizontal"></div> </div> </div> </div>
 
-        <div class="box-container" id="box3">
-            <div class="gift-box">
-                <div class="box-body">
-                    <div class="ribbon vertical"></div>
-                    <div class="ribbon horizontal"></div>
-                </div>
-                <div class="lid">
-                    <div class="ribbon vertical"></div>
-                    <div class="ribbon horizontal"></div>
-                </div>
-            </div>
-        </div>
+        <div class="final-message"> <p id="typed-message"></p> </div>
 
-        <div class="final-message">
-            <p id="typed-message"></p>
-        </div>
+        <div id="prompt" class="prompt-message"></div>
     </div>
 
     <script>
@@ -246,42 +154,63 @@
             const boxes = document.querySelectorAll('.box-container');
             const finalMessageContainer = document.querySelector('.final-message');
             const typedMessageElement = document.getElementById('typed-message');
+            const promptElement = document.getElementById('prompt'); // Nuovo
             let currentBoxIndex = 0;
 
             // =================================================================
-            // >> PERSONALIZZA IL TUO MESSAGGIO QUI <<
-            // Modifica la frase tra gli apici ` `
-            // Puoi usare <span>Testo</span> per rendere una parte più evidente.
-            const messageToType = "bubi, proprio come queste scatole, il mio amore per te non finisce <span>mai</span>. Sei il regalo più bello della mia vita. Ti amo queen!";
+            // >> PERSONALIZZA I MESSAGGI INTERMEDI QUI <<
+            // Aggiungi o togli frasi. Ce ne deve essere una per ogni scatola, più una per la fine.
+            const intermediateMessages = [
+                "c'è una cosa per te... premi qui!", // Messaggio per la scatola 1
+                "apri anche questa...",             // Messaggio per la scatola 2
+                "ancora una...",          // Messaggio per la scatola 3
+                "ultima giuro!",               // Messaggio per la scatola 4
+                "pronta?"                        // Messaggio prima del testo finale
+            ];
             // =================================================================
+
+            // =================================================================
+            // >> PERSONALIZZA IL TUO MESSAGGIO FINALE QUI <<
+           const messageToType = "bubi, proprio come queste scatole, il mio amore per te non finisce <span>mai</span>. Sei il regalo più bello della mia vita. Ti amo queen!";
+            // =================================================================
+
+            function updatePrompt(index) {
+                if (index < intermediateMessages.length) {
+                    promptElement.textContent = intermediateMessages[index];
+                    promptElement.classList.add('visible');
+                } else {
+                    promptElement.classList.remove('visible');
+                }
+            }
 
             function openBox(box) {
                 if (!box) return;
+
+                promptElement.classList.remove('visible'); // Nascondi il messaggio attuale
                 box.classList.add('opening');
 
-                // Attendi la fine dell'animazione di apertura
-                box.addEventListener('transitionend', () => {
-                    // Nascondi la scatola corrente
+                setTimeout(() => {
                     box.classList.remove('active');
-                    box.style.display = 'none'; // Per sicurezza
+                    box.style.display = 'none';
 
-                    // Passa alla scatola successiva
                     currentBoxIndex++;
                     const nextBox = boxes[currentBoxIndex];
 
                     if (nextBox) {
-                        // Mostra la scatola successiva
                         nextBox.classList.add('active');
+                        updatePrompt(currentBoxIndex); // Mostra il messaggio successivo
                     } else {
-                        // Se non ci sono più scatole, mostra il messaggio finale
                         showFinalMessage();
                     }
-                }, { once: true }); // L'evento viene eseguito solo una volta
+                }, 1000); // Deve corrispondere alla durata della transizione in CSS
             }
 
             function showFinalMessage() {
-                finalMessageContainer.classList.add('visible');
-                typeMessage(messageToType, typedMessageElement);
+                updatePrompt(currentBoxIndex); // Mostra l'ultimo messaggio "Pronta??"
+                setTimeout(() => {
+                    finalMessageContainer.classList.add('visible');
+                    typeMessage(messageToType, typedMessageElement);
+                }, 1000); // Pausa per leggere l'ultimo prompt
             }
 
             function typeMessage(text, element) {
@@ -290,7 +219,6 @@
 
                 function type() {
                     if (index < text.length) {
-                        // Gestione tag HTML come <span>
                         if (text.substring(index, index + 6) === '<span>') {
                             const closingTagIndex = text.indexOf('</span>', index);
                             element.innerHTML += text.substring(index, closingTagIndex + 7);
@@ -299,21 +227,22 @@
                             element.innerHTML += text.charAt(index);
                             index++;
                         }
-                        setTimeout(type, 60); // Velocità di scrittura
+                        setTimeout(type, 60);
                     }
                 }
                 type();
             }
 
-            // Aggiungi l'evento di click a tutte le scatole
             boxes.forEach(box => {
                 box.addEventListener('click', () => {
-                    // Apri solo se è la scatola attiva
                     if (box.classList.contains('active')) {
                         openBox(box);
                     }
                 });
             });
+
+            // Mostra il primo messaggio all'avvio
+            updatePrompt(0);
         });
     </script>
 </body>
